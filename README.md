@@ -40,7 +40,7 @@ pip install -r requirements.txt
 	|-- con_view1.csv
 	|-- con_view2.csv
 	|-- con_....csv
-	|-- con_view3.csv
+	|-- con_viewn.csv
 	```
 2. Edit the configuration file [config/train_config.py](config/train_config.py) to add your dataset information under data_set_config
 The meaning of the data set configuration file is as follows:
