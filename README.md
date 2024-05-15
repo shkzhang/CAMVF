@@ -6,8 +6,7 @@ Liver Cancer Diagnosis"
 # Contents
 - [Setup](#Setup)
 - [Train](#Train)
-	- [Environment Install](##Environment Install)
-	- [Data Preparation](##Data Preparation)
+- [Parameter Search](#Parameter\ Search)
 - [Evaluate](#Train)
 
 
