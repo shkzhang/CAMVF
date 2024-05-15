@@ -69,7 +69,7 @@ Intelligence 45(2), 2551–2566 (2022)
 - qmf
 > Zhang, Q., Wu, H., Zhang, C., Hu, Q., Fu, H., Zhou, J.T., Peng, X.: Provable dynamic fusion for low-quality multimodal data. arXiv preprint arXiv:2306.02050(2023)
 - gcca
-> Afshin-Pour, B., Hossein-Zadeh, G.A., Strother, S.C., Soltanian-Zadeh, H.: Enhancing reproducibility of fmri statistical maps using generalized canonical correlation analysis in npairs framework. NeuroImage 60(4), 1970–1981 (2012)
+> Afshin-Pour, B., Hossein-Zadeh, G.A., Strother, S.C., Soltanian-Zadeh, H.: Enhancing reproducibility of fmri statistical maps using generalized canonical correlation analysis in npairs framework. NeuroImage 60(4), 1970–1981 (2012)
 - dcca
 > Andrew, G., Arora, R., Bilmes, J., Livescu, K.: Deep canonical correlation analysis.
 In: International Conference on Machine Learning. pp. 1247–1255. PMLR (2013)
