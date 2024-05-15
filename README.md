@@ -10,7 +10,7 @@ Liver Cancer Diagnosis"
    	- [Data Preparation](#Data-Preparation)
 - [Parameter Search](#Parameter-Search)
 - [Evaluate](#Train)
-- [Radiomics Toolbox](#Radiomics Toolbox)
+- [Radiomics Toolbox](#Radiomics-Toolbox)
 
 # Setup
 
