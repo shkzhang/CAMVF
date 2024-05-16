@@ -30,7 +30,6 @@ pip install -r requirements.txt
 	| feature1 | feature2 | feature3 | ... | featureN |
 	|----------|----------|----------|-----|----------|
 	| value1   | value2   | value3   | ... | valueN   |
-
  	| ...      | ...      | ...      | ... | ...      |
  	| value1   | value2   | value3   | ... | valueN   |
 
