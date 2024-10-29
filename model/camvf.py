@@ -221,12 +221,12 @@ class CAMVF(nn.Module):
         wight_normalize_exp = torch.exp(wight_normalize / self.exp_eta)
         # wight_normalize_exp = wight_normalize
         wight_normalize_exp_sum = torch.sum(wight_normalize_exp, dim=1)[:, None]
-        # wight_normalize_exp = wight_normalize_exp / torch.sum(wight_normalize_exp, dim=1)[:, None]
+        wight_normalize_exp = wight_normalize_exp / torch.sum(wight_normalize_exp, dim=1)[:, None]
         evidence_w = torch.zeros((len(alpha), alpha[0].shape[0], evidence[0].shape[1]),
                                  device=alpha[0].device)  # view * batch * class
         evidence_u_w = torch.zeros((len(alpha), evidence_u[0].shape[0]),
                                    device=alpha[0].device)  # view * batch * class
-        wight_normalize_exp = torch.ones((alpha[0].shape[0], len(alpha)), device=alpha[0].device)
+        # wight_normalize_exp = torch.ones((alpha[0].shape[0], len(alpha)), device=alpha[0].device)
 
         for view in range(len(evidence)):
             evidence_w[view] = (evidence[view] * wight_normalize_exp[:, view][:, None])
