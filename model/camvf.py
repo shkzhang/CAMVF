@@ -147,45 +147,36 @@ class CAMVF(nn.Module):
         evidence, project = self.infer(X)
         loss = 0
 
-        alpha = dict()
-        step_rate = global_step / self.lambda_epoch
-
         # every view loss
+        loss *= (1 - self.beta)
         alpha = dict()
         evidence_u = dict()
         p = dict()
+        step_rate = (global_step + 1) / self.lambda_epoch
 
-        # for view in range(self.views):
-        #     alpha[view] = evidence[view] + 1
-        #     loss += self.beta * self.ce_loss(y, alpha[view], self.classes, global_step,
-        #                                                              self.lambda_epoch,
-        #                                                              c_KL=True)
-        #     # loss += self.beta * nn.CrossEntropyLoss()(evidence[view], y)
-        #
-        #     S = torch.sum(alpha[view], dim=1, keepdim=True)
-        #     E = alpha[view] - 1
-        #     b = E / (S.expand(E.shape))
-        #     u = self.classes / S
-        #     p[view] = alpha[view] / S.expand(alpha[view].shape)
-        #     p[view] = torch.cat([p[view]], dim=1)
-        #     evidence_u[view] = u
-        #
-        # evidence_a, evidence_u_w = self.combine_views(p, evidence_u, evidence)
-        # alpha_a = evidence_a + 1
-        #
-        # loss += min(step_rate,1)* self.beta * self.ce_loss(y, alpha_a, self.classes, global_step, self.lambda_epoch,
-        #                                                      c_KL=True)
-        evidence_a = torch.zeros_like(evidence[0])
         for view in range(self.views):
-            max_idx = torch.argmax(evidence[view], dim=1)
-            loss += nn.CrossEntropyLoss()(evidence[view], y)
-            one_hot_A = torch.zeros_like(evidence[view])
-            one_hot_A.scatter_(1, max_idx.unsqueeze(1), 1)
+            alpha[view] = evidence[view] + 1
+            loss += self.beta * self.ce_loss(y, alpha[view], self.classes, global_step, self.lambda_epoch, c_KL=True)
+            # loss += self.beta * nn.CrossEntropyLoss()(evidence[view], y)
 
-            evidence_a += one_hot_A
-        evidence_a = evidence_a / self.views
-        evidence_a.requires_grad = True
-        loss += nn.CrossEntropyLoss()(evidence_a, y)
+            # evidential
+            S = torch.sum(alpha[view], dim=1, keepdim=True)
+            E = alpha[view] - 1
+            b = E / (S.expand(E.shape))
+            u = self.classes / S  # 不确定性
+            p[view] = alpha[view] / S.expand(alpha[view].shape)  # 概率
+            p[view] = torch.cat([b], dim=1)
+            evidence_u[view] = u
+
+        evidence_a, evidence_u_w = self.combine_views(p, evidence_u, evidence)
+        # mask = evidence_u_w[:, None] > 0.5
+        alpha_a = evidence_a + 1
+        # alpha_a = mask * alpha_a + (~mask) * self.combine_views(alpha)
+
+        loss += self.beta * self.ce_loss(y, alpha_a, self.classes, global_step, self.lambda_epoch,
+                                                             c_KL=True)  # combined view loss
+        # loss += self.beta * nn.CrossEntropyLoss()(evidence_a,y)
+
         return evidence, evidence_a, loss
 
     def infer(self, input):
